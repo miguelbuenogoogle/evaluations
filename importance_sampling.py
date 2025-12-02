@@ -33,3 +33,22 @@ def classification_to_score(
     )
 
     return posterior_probability
+
+def precision_to_recall(precision: float,
+                        false_inclusion_rate: float,
+                        classifier_positive_rate) -> float:
+    """
+    Determines a classifier's recall given its precision, false inclusion rate,
+    and positive rate."""
+    if not (0 < precision < 1):
+        raise ValueError("Precision must be between 0 and 1 (exclusive).")
+    if not (0 < false_inclusion_rate < 1):
+        raise ValueError("False inclusion rate must be between 0 and 1 (exclusive).")
+    if not (0 < classifier_positive_rate < 1):
+        raise ValueError("Classifier positive rate must be between 0 and 1 (exclusive).")
+    recall = (
+        precision / (precision + false_inclusion_rate *
+        (1 - classifier_positive_rate) / classifier_positive_rate)
+    )
+
+    return recall
