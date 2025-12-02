@@ -1,0 +1,35 @@
+from typing import Literal
+import numpy as np
+from sklearn.metrics import fbeta_score
+from scipy.special import expit
+
+def score_to_classification(
+        score: float,
+        threshold: float = 0.5) -> int:
+    """
+    Converts a continuous score to a binary classification based on the given threshold."""
+    if not(0 < score < 1):
+        raise ValueError("Score must be between 0 and 1.")
+    return int(score >= threshold)
+
+def classification_to_score(
+        classification: int,
+        precision_prior: float,
+        false_inclusion_rate_prior: float) -> float:
+    """
+    Converts a binary classification to a continuous score by returning the 
+    probability of being in the positive class based given priors for a classifier's 
+    precision and false inclusion rate priors."""
+    if classification not in (0, 1):
+        raise ValueError("Classification must be 0 or 1.")
+    if not (0 < precision_prior < 1):
+        raise ValueError("Precision prior must be between 0 and 1 (exclusive).")
+    if not (0 < false_inclusion_rate_prior < 1):
+        raise ValueError("Negative precision prior must be between 0 and 1 (exclusive).")
+
+    posterior_probability = (
+    precision_prior * (classification == 1) +
+    (false_inclusion_rate_prior) * (classification == 0)
+    )
+
+    return posterior_probability
