@@ -52,3 +52,22 @@ def precision_to_recall(precision: float,
     )
 
     return recall
+
+def recall_to_precision(recall: float,
+                        false_exclusion_rate: float,
+                        prevalence) -> float:
+    """
+    Determines a classifier's precision given its recall, false exclusion rate,
+    and prevalence."""
+    if not (0 < recall < 1):
+        raise ValueError("Recall must be between 0 and 1 (exclusive).")
+    if not (0 < false_exclusion_rate < 1):
+        raise ValueError("False exclusion rate must be between 0 and 1 (exclusive).")
+    if not (0 < prevalence < 1):
+        raise ValueError("Prevalence must be between 0 and 1 (exclusive).")
+    precision = (
+        recall / (recall + false_exclusion_rate * prevalence / (1 - prevalence))
+    )
+
+    return precision
+                                
