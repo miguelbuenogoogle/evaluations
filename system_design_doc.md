@@ -2,36 +2,36 @@
 Notes by Miguel Bueno
 
 ## Abstract
-
 We consider a population of entities $\mathcal{X}$ evolving over time $t$,
 where each entity $x_i$ has a latent true label $Y_i$ and engagement
 weight $E_{it}$. The target estimand is the engagement-weighted
-prevalence $\mu_E = \mathbb{E}_{x \sim p_t}[Y(x)] \mid p_t(x) \propto
-E_{it}$, and the global objective is to minimize an upper confidence
-bound on a policy-dependent loss functional $\mathcal{L}(\tau,\mathcal{G})$
-at $t+1$ by jointly optimizing the deployment policy $\tau$ and the
-labeling policy $\mathcal{G}$.
+prevalence $\mu_E = \mathbb{E}_{x \sim p_t}[Y(x)] \;\text{with}\;
+p_t(x) \propto E_{it}$, and the global objective is to minimize an upper
+confidence bound on a policy-dependent loss functional
+$\mathcal{L}(\tau,\mathcal{G})$ at $t+1$ by jointly optimizing the
+deployment policy $\tau$ and the labeling policy $\mathcal{G}$.
 
 We have available a set of resources $\mathcal{R}$ categorized by type
 $\kappa = \rho(r)$<sup>1</sup>. Each resource is characterized by a
 Resource Profile $\Phi_\kappa = \langle c_\kappa, \Omega_\kappa,
-\mathbf{N}_\kappa \rangle$, representing its marginal cost, processing
-capacity, and noise<sup>2</sup><sup>3</sup>. Under a fixed global budget
-$B_t$ and total system bandwidth $\Omega_t$, the policies $\tau$ and
-$\mathcal{G}$ are constrained such that aggregate cost and throughput
-satisfy budget and capacity constraints (e.g., $\sum_{\kappa} c_\kappa
-n_\kappa \leq B_t$ and $\sum_{\kappa} \Omega_\kappa \leq \Omega_t$).
+\boldsymbol{N}_\kappa \rangle$, representing its marginal cost,
+processing capacity, and noise<sup>2</sup><sup>3</sup>. Under a fixed
+global budget $B_t$ and total system bandwidth $\Omega_t$, the policies
+$\tau$ and $\mathcal{G}$ are constrained such that aggregate cost and
+throughput satisfy budget and capacity constraints (e.g.,
+$\sum_{\kappa} c_\kappa n_\kappa \leq B_t$ and $\sum_{\kappa}
+\Omega_\kappa \leq \Omega_t$).
 
 A resource type $\kappa$ is said to be high-fidelity if it exhibits low
-noise, $\mathbf{N}_{\kappa} \approx \mathbf{I}$, but is constrained in
-cost and/or capacity, such that $c_{\kappa}$ is large and $\Omega_\kappa
-\ll |\mathcal{X}|$. Conversely, a resource type $\kappa$ is low-fidelity
-if it is inexpensive and scalable, with $c_\kappa \ll c_{\mathrm{HF}}$
-and $\Omega_\kappa \gtrsim |\mathcal{X}|$, but exhibits substantially
-higher noise<sup>4</sup>. A resource type $\kappa$ is mid-fidelity if it
-lies between these extremes in noise, cost, and capacity, while still
-remaining meaningfully capacity-constrained relative to the low-fidelity
-resource.
+noise, $\boldsymbol{N}_{\kappa} \approx \mathbf{I}$, but is constrained
+in cost and/or capacity, such that $c_{\kappa}$ is large and
+$\Omega_\kappa \ll |\mathcal{X}|$. Conversely, a resource type $\kappa$
+is low-fidelity if it is inexpensive and scalable, with $c_\kappa \ll
+c_{\mathrm{HF}}$ and $\Omega_\kappa \gtrsim |\mathcal{X}|$, but exhibits
+substantially higher noise<sup>4</sup>. A resource type $\kappa$ is
+mid-fidelity if it lies between these extremes in noise, cost, and
+capacity, while still remaining meaningfully capacity-constrained
+relative to the low-fidelity resource.
 
 High- and mid-fidelity resources are used to produce reference labels
 $Y_i^*$ for estimating $\mu_E$. We construct a sampled dataset
@@ -44,11 +44,11 @@ entity $X_i$ is evaluated by a panel of mid-fidelity resources
 $\mathcal{P}_i \subset \mathcal{R}$ under policy $\mathcal{G}$. Each
 resource $r \in \mathcal{P}_i$ produces a valuation $v_{ir}$<sup>5</sup>,
 which is aggregated via $\mathcal{A}(\cdot)$ to produce an aggregated
-valuation $\hat{V}_{i} = \mathcal{A}(\{v_{ir}\}_{r \in \mathcal{P}_i})$
-for all $x_{i} \in \mathcal{D}_{n,t}$. These valuations are mapped to
-discrete outcomes using a decision threshold $\eta$. The predicted label
-$\hat{Y}_{i} = \mathbb{I}(\hat{V}_{i}>\eta)$ is then used to estimate
-$\mu_{E}$.
+valuation $\hat{V}_{i} = \mathcal{A}(\{v_{ir}\}_{r \in
+\mathcal{P}_i})$ for all $x_{i} \in \mathcal{D}_{n,t}$. These valuations
+are mapped to discrete outcomes using a decision threshold $\eta$. The
+predicted label $\hat{Y}_{i} = \mathbf{1}\{\hat{V}_{i}>\eta\}$ is then
+used to estimate $\mu_{E}$.
 
 To minimize redundant expenditure, we implement adaptive task assignment
 where panel size $|\mathcal{P}_i| = \phi(\alpha_i, \epsilon)$ is
@@ -67,9 +67,9 @@ exposure levels $a_\tau(x) \in [0,1]$ interpreted as a multiplicative
 ranking factor<sup>8</sup><sup>9</sup>.
 
 Low-fidelity resource performance is assessed using a self-normalized,
-importance-weighted confusion matrix $\mathbf{M}(\eta)$, yielding
-weighted precision $p_{\omega m}(\mathbf{M})$ and recall
-$r_{\omega m}(\mathbf{M})$ and other metrics. Evaluation is conducted
+importance-weighted confusion matrix $\boldsymbol{M}(\eta)$, yielding
+weighted precision $p_{\omega m}(\boldsymbol{M})$ and recall
+$r_{\omega m}(\boldsymbol{M})$ and other metrics. Evaluation is conducted
 under a counterfactual no-policy baseline by weighting observations using
 predicted counterfactual engagement $\widehat{E}_{it}$ to avoid demotion
 bias. When $\mathcal{P}_i$ used to construct $Y_i^*$ consists of
@@ -106,11 +106,11 @@ Collectively, these components define a closed-loop system in which
 sampling, labeling, evaluation, and deployment interact through shared
 resource constraints and evolving population dynamics. The system
 objective is therefore to solve the constrained optimization problem
-$\min_{\tau, \mathcal{G}} \; \operatorname{UCB}\!\left(\mathcal{L}
-(\tau,\mathcal{G}) \right)$ subject to $\sum_{i \in \mathcal{D}_{n,t}}
-\sum_{r \in \mathcal{P}_i} c_{\rho(r)} \le B_t$ and $\sum_{i \in
-\mathcal{D}_{n,t}} \mathbf{1}\{\rho(r)=\kappa,\; r \in \mathcal{P}_i\}
-\le \Omega_\kappa,  \forall \kappa$.
+$\min_{\tau, \mathcal{G}} \text{UCB}(\mathcal{L}(\tau,\mathcal{G}))$
+subject to $\sum_{i \in \mathcal{D}_{n,t}} \sum_{r \in
+\mathcal{P}_i} c_{\rho(r)} \le B_t$ and $\sum_{i \in
+\mathcal{D}_{n,t}} \mathbf{1}\{\rho(r)=\kappa,\; r \in
+\mathcal{P}_i\} \le \Omega_\kappa,  \forall \kappa$.
 
 ---
 
@@ -120,10 +120,11 @@ and expert human annotators, etc.
 assume they are relatively stable in the short-run.  
 <sup>3</sup> In reality noise is often heteroscedastic, arising from
 resource capabilities and latent task complexity.  
-<sup>4</sup> As reflected by $\operatorname{tr}(\mathbf{N}_\kappa) \gg
-\operatorname{tr}(\mathbf{N}_{\mathrm{HF}})$.  
+<sup>4</sup> As reflected by $\text{tr}(\boldsymbol{N}_\kappa) \gg
+\text{tr}(\boldsymbol{N}_{\mathrm{HF}})$.  
 <sup>5</sup> For human annotators, $v_{ir}$ is typically derived from
-structured ordinal responses $S_{ir\ell}$ over a template $\mathcal{Q}$.  
+structured ordinal responses $S_{ir\ell}$ over a template
+$\mathcal{Q}$.  
 <sup>6</sup> Task difficulty is frequently proxied by agreement
 ($\alpha_i$) calculated over an initial rater subset.  
 <sup>7</sup> E.g. prediction-power-inference (PPI), double-sampling, etc.  
