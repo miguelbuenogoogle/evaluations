@@ -39,9 +39,10 @@ $\mathcal{D}\_{n,t} = \{X\_i \mid R\_{it}=1\} \subset \mathcal{X}$ with
 inclusion probabilities $\pi\_{it}$. To efficiently estimate $\mu\_E$,
 samples are drawn under an importance distribution $q(x)$ (potentially
 stratified over $\mathcal{H}$ and pooled over horizon $T$), with
-importance weights $w\_i = p\_{it} \cdot (q\_{it})^{-1}$. Each sampled
-entity $X\_i$ is evaluated by a panel of mid-fidelity resources
-$\mathcal{P}\_i \subset \mathcal{R}$ under policy $\mathcal{G}$. Each
+importance weights $w\_i = p\_{it} \cdot (q\_{it})^{-1}$. Accounting for
+an availability probability $P(A_{i}=1|Y_{i}=1) \leq 1$ at the labeling stage,
+each available sampled entity $X\_i$ is evaluated by a panel of mid-fidelity
+resources $\mathcal{P}\_i \subset \mathcal{R}$ under policy $\mathcal{G}$. Each
 resource $r \in \mathcal{P}\_i$ produces a valuation $v\_{ir}$<sup>5</sup>,
 which is aggregated via $\mathcal{A}(\cdot)$ to produce an aggregated
 valuation $\hat{V}\_{i} = \mathcal{A}(\{v\_{ir}\}\_{r \in \mathcal{P}\_i})$
