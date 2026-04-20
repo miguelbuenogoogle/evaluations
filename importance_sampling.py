@@ -1,3 +1,5 @@
+# Functions for importance sampling and related calculations.
+
 from typing import Literal
 import numpy as np
 from sklearn.metrics import fbeta_score
